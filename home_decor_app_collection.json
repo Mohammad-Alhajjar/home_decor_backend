@@ -1,0 +1,70 @@
+{
+  "info": {
+    "name": "Home Decor API - V1",
+    "_postman_id": "home-decor-001",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "if(jsonData.token) {",
+              "    pm.collectionVariables.set(\"home_decor_token\", jsonData.token);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"user@email.com\",\n    \"password\": \"user123456\"\n}"
+        },
+        "url": "http://127.0.0.1:8000/login"
+      }
+    },
+    {
+      "name": "2. Get All Furniture",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{home_decor_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "url": "http://127.0.0.1:8000/furniture"
+      }
+    },
+    {
+      "name": "3. Get Best Selling",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{home_decor_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "url": "http://127.0.0.1:8000/furniture/best-selling"
+      }
+    }
+  ],
+  "variable": [{ "key": "home_decor_token", "value": "" }]
+}
